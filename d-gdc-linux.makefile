@@ -7,7 +7,7 @@ SRCS := $(shell find $(SRC_DIR) -type f -name '*.d')
 OBJS := $(patsubst $(SRC_DIR)/%.d,$(BIN_DIR)/%.o,$(SRCS))
 
 DC := @gdc
-DFLAGS := -w
+DFLAGS := -Wall -Wextra
 
 LDFLAGS :=
 
@@ -18,13 +18,13 @@ all: $(BIN_DIR)/$(EXEC_NAME)
 $(BIN_DIR)/$(EXEC_NAME): $(OBJS)
 	$(LOGGER) Linking...
 	@mkdir -p $(BIN_DIR)
-	$(DC) $(LDFLAGS) -of=$@ $^
+	$(DC) $(LDFLAGS) -o $@ $^
 	@echo "done."
 
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.d
 	$(LOGGER) Compiling...
 	@mkdir -p $(@D)
-	$(DC) $(DFLAGS) -c -of=$@ $<
+	$(DC) $(DFLAGS) -c -o $@ $<
 	@echo "done."
 
 start:
